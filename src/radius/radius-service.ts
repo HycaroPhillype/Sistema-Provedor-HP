@@ -1,7 +1,7 @@
 // src/radius/radius.service.ts
 import { Injectable, Logger } from '@nestjs/common';
 import * as radius from 'radius'; // Biblioteca para comunicação RADIUS
-import { Cliente } from '../clientes/entities/cliente.entity';
+import { Cliente } from '../clientes/entities/cliente-entity';
 
 @Injectable()
 export class RadiusService {
