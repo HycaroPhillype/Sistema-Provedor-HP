@@ -12,7 +12,7 @@ export class BloqueioService {
         private radiusService: RadiusService,
     ) {}
 
-    //Tarefa agendada: Executa diariamente as 23:00
+    
     @Cron(CronExpression.EVERY_DAY_AT_11PM)
     async verificarInadimplentes() {
         const clientes =  await this.clientesService.findAll();
