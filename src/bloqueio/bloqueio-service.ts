@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { FinanceiroService } from '../financeiro/financeiro.service';
+import { FinanceiroService } from '../Financeiro/financeiro.service';
 import { ClientesService } from '../clientes/clientes.service';
-import { RadiusService } from '../radius/radius.service';
+import { RadiusService } from '../Radius/radius.service';
 import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
