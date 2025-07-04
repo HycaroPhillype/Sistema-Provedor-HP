@@ -21,13 +21,10 @@ export class BloqueioService {
             const temDebitos = await this.financeiroService.clienteTemFaturasAtrasadas(cliente.id);
 
             if (temDebitos && cliente.ativo) {
-                // Bloqueia o cliente com débito
                 await this.radiusService.bloquearCliente(cliente.login);
-                // Atualiza o status do cliente para inativo
                 await this.clientesService.update(cliente.id, { ativo: false})
             } 
             else if (!temDebitos && !cliente.ativo) {
-                // Libera cliente que regularizou débito
                 await this.radiusService.liberarCliente(cliente.login);
                 await this.clientesService.update(cliente.id, { ativo: true });
             }
@@ -35,7 +32,6 @@ export class BloqueioService {
                
     }
 
-    // Bloqueio manual ( via endpoint)
     async bloquearPorId(clienteId: number): Promise<void> {
         const cliente = await this.clientesService.findOne(clienteId);
         if (cliente && cliente.ativo) {
