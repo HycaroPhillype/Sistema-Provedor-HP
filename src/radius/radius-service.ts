@@ -1,9 +1,6 @@
-// src/radius/radius.service.ts
+
 import { Injectable, Logger } from '@nestjs/common';
-import * as radius from 'radius'; // Biblioteca para comunicação RADIUS
-import { Cliente } from '../clientes/entities/cliente-entity';
-import { time } from 'console';
-import { asyncWrapProviders } from 'async_hooks';
+import * as radius from 'radius'; 
 
 @Injectable()
     export class RadiusService {
@@ -34,7 +31,8 @@ import { asyncWrapProviders } from 'async_hooks';
       }
 
     }
-
+6 
+.
     async liberarCliente(username: string): Promise<boolean> {
       try {
         await this.client.enableUser(username);
