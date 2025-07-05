@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { FinanceiroService } from '../Financeiro/financeiro.service';
+import { FinanceiroService } from '../financeiro/financeiro-service';
 import { ClientesService } from '../clientes/clientes.service';
-import { RadiusService } from '../Radius/radius.service';
+import { RadiusService } from '../radius/radius-service';
 import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
@@ -23,8 +23,7 @@ export class BloqueioService {
             if (temDebitos && cliente.ativo) {
                 await this.radiusService.bloquearCliente(cliente.login);
                 await this.clientesService.update(cliente.id, { ativo: false})
-            } 
-            else if (!temDebitos && !cliente.ativo) {
+            } else if (!temDebitos && !cliente.ativo) {
                 await this.radiusService.liberarCliente(cliente.login);
                 await this.clientesService.update(cliente.id, { ativo: true });
             }

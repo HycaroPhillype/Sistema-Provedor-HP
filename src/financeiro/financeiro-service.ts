@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LessThan, Repository } from 'typeorm';
-import { Fatura } from 'src/Financeiro/fatura-entity';
+import { Fatura } from 'src/financeiro/fatura-entity';
 import { ClientesService } from '../clientes/clientes.service';
 
 @Injectable()
