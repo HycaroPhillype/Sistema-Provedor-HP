@@ -1,19 +1,19 @@
-import { Cliente } from '../clientes/entities/cliente-entity';
+import { Cliente } from '../clientes/entities/cliente.entity';
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
 @Entity()
 export class Fatura {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ManyToOne(() => Cliente)
-    clientes: Cliente;
+  @ManyToOne(() => Cliente)
+  clientes: Cliente;
 
-    @Column({ type: 'decimal', precision: 10, scale: 2 })
-    valor: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  valor: number;
 
-    @Column({ type: 'date' })
-    vencimento: Date;
+  @Column({ type: 'date' })
+  vencimento: Date;
 
-    @Column({ default: false })
-    paga: boolean;
+  @Column({ default: false })
+  paga: boolean;
 }

@@ -1,6 +1,6 @@
 
 import { Injectable, Logger } from '@nestjs/common';
-import * as radius from 'radius'; 
+import * as radius from 'node-radius'; 
 
 @Injectable()
     export class RadiusService {
@@ -31,8 +31,8 @@ import * as radius from 'radius';
       }
 
     }
-6 
-.
+
+
     async liberarCliente(username: string): Promise<boolean> {
       try {
         await this.client.enableUser(username);
