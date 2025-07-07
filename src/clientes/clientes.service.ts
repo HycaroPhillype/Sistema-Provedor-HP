@@ -4,12 +4,14 @@ import { Repository } from 'typeorm';
 import { Cliente } from './entities/cliente.entity';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import * as bcrypt from 'bcrypt';
+import { RadiusService } from '../radius/radius-service';
 
 @Injectable()
 export class ClientesService {
   constructor(
     @InjectRepository(Cliente)
     private readonly clienteRepository: Repository<Cliente>,
+    private radiusService: RadiusService
   ) {}
 
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
@@ -23,7 +25,15 @@ export class ClientesService {
     }
 
     const cliente = this.clienteRepository.create(createClienteDto);
-    return this.clienteRepository.save(cliente);
+    const clienteSave = await this.clienteRepository.save(cliente);
+
+    await this.radiusService.addUser(
+      clienteSave.login,
+      createClienteDto.senha,
+      clienteSave.ip_assinante
+    );
+
+    return clienteSave;
   }
 
   async findAll(page: number = 1, limit: number = 10): Promise<Cliente[]> {
