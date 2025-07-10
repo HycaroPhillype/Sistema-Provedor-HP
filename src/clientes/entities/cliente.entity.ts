@@ -1,4 +1,3 @@
-import { BlobOptions } from 'buffer';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
@@ -15,13 +14,17 @@ export class Cliente {
   @Column({ type: 'varchar', length: 100 })
   endereco: string;
 
-  @Column({ type: 'varchar', length: 15, nullable: true })telefone?: number;
+  @Column({ type: 'varchar', length: 15, nullable: true })
+  telefone?: number;
 
   @Column({ type: 'varchar', length: 100, nullable: true })
   email?: string;
-  
+
   @Column()
   plano: string;
+
+  @Column({ nullable: true }) // se não for obrigatório
+  ip_assinante: string;
 
   @Column({
     type: 'varchar',
@@ -41,7 +44,7 @@ export class Cliente {
   @Column({
     default: true, // Valor padrão o criar novo cliente
   })
-  ativo: boolean;  //Status de bloqueio/liberação
+  ativo: boolean; //Status de bloqueio/liberação
 
   @Column({
     type: 'date',

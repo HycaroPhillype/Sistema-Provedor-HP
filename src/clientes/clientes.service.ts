@@ -11,13 +11,18 @@ export class ClientesService {
   constructor(
     @InjectRepository(Cliente)
     private readonly clienteRepository: Repository<Cliente>,
-    private radiusService: RadiusService
+    private radiusService: RadiusService,
   ) {}
 
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
     if (!createClienteDto.login) {
       createClienteDto.login = this.gerarLogin(createClienteDto.nome);
     }
+
+    if (!createClienteDto.senha) {
+      throw new NotFoundException('Senha é obrigatória para criar um cliente');
+    }
+
     if (createClienteDto.senha) {
       createClienteDto.senha = await this.criptografarSenha(
         createClienteDto.senha,
@@ -30,7 +35,7 @@ export class ClientesService {
     await this.radiusService.addUser(
       clienteSave.login,
       createClienteDto.senha,
-      clienteSave.ip_assinante
+      clienteSave.ip_assinante,
     );
 
     return clienteSave;
