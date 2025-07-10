@@ -86,4 +86,20 @@ export class RadiusService {
       return false;
     }
   }
+
+  async removeUser(username: string): Promise<boolean> {
+    if (!this.client) {
+      this.logger.error('Cliente RADIUS não inicializado.');
+      return false;
+    }
+    try {
+      await this.client.removeUser(username);
+      this.logger.log(`Usuário ${username} removido do RADIUS.`);
+      return true;
+    } catch (error) {
+      this.logger.error(`Falha ao remover usuário ${username} do RADIUS`, {
+        error: error.message,
+        stack: error.stack,
+      )};
+      return false;
 }

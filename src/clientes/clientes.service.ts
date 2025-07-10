@@ -62,7 +62,20 @@ export class ClientesService {
   }
 
   async remove(id: number): Promise<void> {
+    const cliente = await this.findOne(id);
+    const resultadoRadius = await this.radiusService.removeUser(cliente.login);
+    if (!resultadoRadius) {
+      this.logger.error(`Falha ao reomver ${cliente.login} do Radius`);
+    }
     await this.clienteRepository.update(id, { ativo: false });
+
+    this.logger.log(`Cliente ID ${id} (${cliente.nome}) marado como inativo.`);
+
+    await this.historicoService.registrar(
+      'CLIENTE_DESATIVADO',
+      `CLIENTE ${cliente.nome} desativado.`,
+    )
+    
   }
 
   private gerarLogin(nome: string): string {
