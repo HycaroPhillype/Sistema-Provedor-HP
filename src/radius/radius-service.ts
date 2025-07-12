@@ -100,6 +100,9 @@ export class RadiusService {
       this.logger.error(`Falha ao remover usuário ${username} do RADIUS`, {
         error: error.message,
         stack: error.stack,
-      )};
+      });
+      
       return false;
+    }
+  }
 }

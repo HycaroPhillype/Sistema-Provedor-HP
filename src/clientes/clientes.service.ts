@@ -1,17 +1,20 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Cliente } from './entities/cliente.entity';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import * as bcrypt from 'bcrypt';
 import { RadiusService } from '../radius/radius-service';
+import { HistoricoService } from '../historico/historico-service';
 
 @Injectable()
 export class ClientesService {
+  private readonly logger = new Logger(ClientesService.name);
   constructor(
     @InjectRepository(Cliente)
     private readonly clienteRepository: Repository<Cliente>,
     private radiusService: RadiusService,
+    private historicoService: HistoricoService,
   ) {}
 
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
@@ -62,7 +65,9 @@ export class ClientesService {
   }
 
   async remove(id: number): Promise<void> {
+    
     const cliente = await this.findOne(id);
+
     const resultadoRadius = await this.radiusService.removeUser(cliente.login);
     if (!resultadoRadius) {
       this.logger.error(`Falha ao reomver ${cliente.login} do Radius`);
@@ -72,10 +77,10 @@ export class ClientesService {
     this.logger.log(`Cliente ID ${id} (${cliente.nome}) marado como inativo.`);
 
     await this.historicoService.registrar(
-      'CLIENTE_DESATIVADO',
+      `CLIENTE_DESATIVADO`,
       `CLIENTE ${cliente.nome} desativado.`,
-    )
-    
+      cliente.id,
+    );
   }
 
   private gerarLogin(nome: string): string {
