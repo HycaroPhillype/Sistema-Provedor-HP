@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Cliente } from '../src/clientes/entities/cliente.entity';
@@ -11,7 +11,9 @@ describe('ClientesController (e2e)', () => {
     let app: INestApplication;
     let clientesRepo: Repository<Cliente>;
 
-    beforeAll(async () => {
+    beforeAll(() => {
+        clientesRepo = globalThis.app.get(getRepositoryToken(Cliente));
+        
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [AppModule],
         }).compile();
@@ -44,14 +46,14 @@ describe('ClientesController (e2e)', () => {
             ativo: true,
         });
 
-        const response = await request(app.getHttpServer())
+        await request(app.getHttpServer())
             .delete(`/clientes/${newCliente.id}`)
             .expect(200);
 
-            expect(response.body).toEqual({});
+        const clienteRemovido = await clientesRepo.findOneBy({ id: novoCliente.id })
 
-            const(clienteRemovido).toBeDefined();
-            expect(clienteRemovido.ativo).toBe(false);
+        expect(clienteRemovido).toBeDefined();
+        expect(clienteRemovido.ativo).toBe(false);
         
     });
 
