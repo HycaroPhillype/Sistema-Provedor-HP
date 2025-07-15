@@ -4,13 +4,14 @@ import { AppModule } from '../src/app.module';
 
 
 module.exports =  async () => {
-    execSync(`npm run typeorm migration:run`, { stdio: 'inherit'});
-
-    const module = await Test.createTestingModule({
+    const moduleRef = await Test.createTestingModule({
         imports: [AppModule],
     }).compile();
 
-    globalThis.app = module.createNestApplication();
-    await globalThis.PageSwapEvent.init();
+    const app = moduleRef.createNestApplication();
+    await app.init();
 
+    globalThis.__APP__ = app;
+
+    
 };

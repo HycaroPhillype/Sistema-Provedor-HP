@@ -1,5 +1,5 @@
-module.exports = async () => {
-    if (globalThis.app) {
-        await globalThis.app.close();
+module.exports = async function globalTeardown() {
+    if (globalThis.__APP__) {
+        await globalThis.__APP__.close();
     }
 };
