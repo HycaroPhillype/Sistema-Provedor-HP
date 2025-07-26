@@ -49,7 +49,8 @@ describe('ClientesController (e2e)', () => {
     const clienteRemovido = await clientesRepo.findOneBy({ id: newCliente.id });
 
     expect(clienteRemovido).toBeDefined();
-    expect(clienteRemovido.ativo).toBe(false);
+    expect(clienteRemovido).toHaveProperty('id', clienteId);
+    expect(clienteRemovido!.ativo).toBe(false);
   });
 
   it('/clientes/:id (DELETE) - deve retornar 404 se o cliente não existir', async () => {

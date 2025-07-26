@@ -1,5 +1,5 @@
 import { Controller, Post, Body, Get } from '@nestjs/common';
-import { RadiusService } from 'src/radius/radius-service';
+import { RadiusService } from './radius-service';
 import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 class RadiusTestDto {
