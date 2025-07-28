@@ -53,6 +53,6 @@ export class Cliente {
   })
   data_instalacao?: Date;
 
-  @ManyToOne(() => Plano, (plano) => plano.cliente)
-  plano: Plano;
+  @ManyToOne(() => Plano, (plano) => plano.clientes)
+  planos: Plano;
 }
