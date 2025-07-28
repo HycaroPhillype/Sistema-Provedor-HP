@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Plano } from '../../planos/entities/plano-entity';
 
 @Entity()
 export class Cliente {
@@ -23,7 +24,7 @@ export class Cliente {
   @Column()
   plano: string;
 
-  @Column({ nullable: true }) // se não for obrigatório
+  @Column({ nullable: true })
   ip_assinante: string;
 
   @Column({
@@ -31,7 +32,7 @@ export class Cliente {
     length: 100,
     nullable: true,
   })
-  login: string; //Usuário PPPoE
+  login: string;
 
   @Column({
     type: 'varchar',
@@ -39,16 +40,19 @@ export class Cliente {
     nullable: true,
     select: false,
   })
-  senha: string; //senha PPPoE
+  senha: string;
 
   @Column({
-    default: true, // Valor padrão o criar novo cliente
+    default: true,
   })
-  ativo: boolean; //Status de bloqueio/liberação
+  ativo: boolean;
 
   @Column({
     type: 'date',
     nullable: true,
   })
-  data_instalacao?: Date; //Data da primeira ativação
+  data_instalacao?: Date;
+
+  @ManyToOne(() => Plano, (plano) => plano.cliente)
+  plano: Plano;
 }
