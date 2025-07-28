@@ -22,10 +22,7 @@ export class PlanosController {
   }
 
   @Put('id')
-  update(
-    @Param('id') id: string,
-    @Body() updateData: Plano,
-  ): Promise<Plano> {
+  update(@Param('id') id: string, @Body() updateData: Plano): Promise<Plano> {
     return this.planosService.update(Number(id), updateData);
   }
 
@@ -33,6 +30,4 @@ export class PlanosController {
   disable(@Param('id') id: string): Promise<Plano> {
     return this.planosService.disable(Number(id));
   }
-
 }
-

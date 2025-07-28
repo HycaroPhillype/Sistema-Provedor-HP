@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PlanosController } from './planos.controler';
+import { PlanosController } from './planos-controler';
 import { PlanosService } from './planos-service';
 import { Plano } from './entities/plano-entity';
 
