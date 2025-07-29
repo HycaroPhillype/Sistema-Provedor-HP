@@ -6,6 +6,7 @@ import { CreateClienteDto } from './dto/create-cliente.dto';
 import * as bcrypt from 'bcrypt';
 import { RadiusService } from '../radius/radius-service';
 import { HistoricoService } from '../historico/historico-service';
+import { PlanosService } from '../planos/planos-service';
 
 @Injectable()
 export class ClientesService {
@@ -15,6 +16,7 @@ export class ClientesService {
     private readonly clienteRepository: Repository<Cliente>,
     private radiusService: RadiusService,
     private historicoService: HistoricoService,
+    private planosService: PlanosService,
   ) {}
 
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
@@ -32,8 +34,25 @@ export class ClientesService {
       );
     }
 
-    const cliente = this.clienteRepository.create(createClienteDto);
-    const clienteSave = await this.clienteRepository.save(cliente);
+    if (!createClienteDto.planoId) {
+      throw new NotFoundException('ID do plano é obrigatório.');
+    }
+
+    const plano = await this.planosService.searchById(
+      Number(createClienteDto.planoId),
+    );
+
+    if (!plano) {
+      throw new NotFoundException(
+        `Plano com ID ${createClienteDto.planoId} não encontrado`,
+      );
+    }
+
+    const cliente = this.clienteRepository.create({
+      ...createClienteDto,
+      plano,
+    });
+    const clienteSave: Cliente = await this.clienteRepository.save(cliente);
 
     await this.radiusService.addUser(
       clienteSave.login,
@@ -65,7 +84,6 @@ export class ClientesService {
   }
 
   async remove(id: number): Promise<void> {
-    
     const cliente = await this.findOne(id);
 
     const resultadoRadius = await this.radiusService.removeUser(cliente.login);

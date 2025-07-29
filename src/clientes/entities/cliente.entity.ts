@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Plano } from '../../planos/entities/plano-entity';
 
 @Entity()
@@ -54,5 +60,9 @@ export class Cliente {
   data_instalacao?: Date;
 
   @ManyToOne(() => Plano, (plano) => plano.clientes)
+  @JoinColumn({ name: 'plano_id' })
   planos: Plano;
+
+  @Column({ name: 'plano_id' })
+  planoId: number;
 }
