@@ -1,4 +1,13 @@
-import { Controller, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Put,
+  Post,
+  Body,
+  Param,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { PlanosService } from './planos-service';
 import { Plano } from './entities/plano-entity';
 
@@ -17,8 +26,12 @@ export class PlanosController {
   }
 
   @Get('id')
-  searchOn(@Param('id') id: string): Promise<Plano> {
-    return this.planosService.searchById(Number(id));
+  async searchOn(@Param('id') id: string): Promise<Plano> {
+    const plano = await this.planosService.searchById(Number(id));
+    if (!plano) {
+      throw new NotFoundException(`Plano com ID ${id} não encontrado`);
+    }
+    return plano;
   }
 
   @Put('id')
