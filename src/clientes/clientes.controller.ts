@@ -11,6 +11,7 @@ import {
 import { ClientesService } from './clientes.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger'; // Documentação
+import { UpdateClienteDto } from './dto/update-cliente.dto';
 
 @ApiTags('Clientes')
 @Controller('clientes')
@@ -46,10 +47,7 @@ export class ClientesController {
   @Put(':id')
   @ApiOperation({ summary: 'Atualizar cliente' })
   @ApiResponse({ status: 200, description: 'Cliente atualizado com sucesso.' })
-  async update(
-    @Param('id') id: string,
-    @Body() updateData: Partial<CreateClienteDto>,
-  ) {
+  async update(@Param('id') id: string, @Body() updateData: UpdateClienteDto) {
     return this.clientesService.update(+id, updateData);
   }
 

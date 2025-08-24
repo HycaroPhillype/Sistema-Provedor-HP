@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { RadiusService } from '../radius/radius-service';
 import { HistoricoService } from '../historico/historico-service';
 import { PlanosService } from '../planos/planos-service';
+import { UpdateClienteDto } from './dto/update-cliente.dto';
 
 @Injectable()
 export class ClientesService {
@@ -48,11 +49,17 @@ export class ClientesService {
       );
     }
 
-    const cliente = this.clienteRepository.create({
-      ...createClienteDto,
-      plano,
-    });
-    const clienteSave: Cliente = await this.clienteRepository.save(cliente);
+    const cliente = new Cliente();
+    const newCliente = Object.assign(cliente, createClienteDto);
+
+    newCliente.plano = String(plano.planoDownload);
+
+    // const cliente = this.clienteRepository.create({
+    //   ...createClienteDto,
+    //   plano: String(plano.planoDownload),
+    // });
+
+    const clienteSave: Cliente = await this.clienteRepository.save(newCliente);
 
     await this.radiusService.addUser(
       clienteSave.login,
@@ -78,8 +85,11 @@ export class ClientesService {
     }
     return cliente;
   }
-  async update(id: number, updateData: Partial<Cliente>): Promise<Cliente> {
-    await this.clienteRepository.update(id, updateData);
+  async update(id: number, updateData: UpdateClienteDto): Promise<Cliente> {
+    await this.clienteRepository.update(
+      id,
+      updateData as unknown as Partial<Cliente>,
+    );
     return this.findOne(id);
   }
 
