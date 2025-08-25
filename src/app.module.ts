@@ -3,6 +3,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ClientesModule } from './clientes/clientes.module';
+import { PlanoModule } from './planos/planos-module';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -18,6 +19,7 @@ import { ClientesModule } from './clientes/clientes.module';
       synchronize: true,
     }),
     ClientesModule,
+    PlanoModule,
   ],
 })
 export class AppModule {}

@@ -70,7 +70,7 @@ export class ClientesService {
     return clienteSave;
   }
 
-   private gerarLogin(nome: string): string {
+  private gerarLogin(nome: string): string {
     const normalized = nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     return normalized.toLowerCase().replace(/\s+/g, '.');
   }
@@ -79,7 +79,7 @@ export class ClientesService {
     const saltRounds = 10;
     return await bcrypt.hash(senha, saltRounds);
   }
-  
+
   async findAll(page: number = 1, limit: number = 10): Promise<Cliente[]> {
     return this.clienteRepository.find({
       skip: (page - 1) * limit,
@@ -114,11 +114,10 @@ export class ClientesService {
 
     this.logger.log(`Cliente ID ${id} (${cliente.nome}) marado como inativo.`);
 
-    await this.historicoService.registrar(
+    this.historicoService.registrar(
       `CLIENTE_DESATIVADO`,
       `CLIENTE ${cliente.nome} desativado.`,
       cliente.id,
     );
   }
-
- 
+}
