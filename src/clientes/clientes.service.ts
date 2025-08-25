@@ -70,6 +70,16 @@ export class ClientesService {
     return clienteSave;
   }
 
+   private gerarLogin(nome: string): string {
+    const normalized = nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return normalized.toLowerCase().replace(/\s+/g, '.');
+  }
+
+  private async criptografarSenha(senha: string): Promise<string> {
+    const saltRounds = 10;
+    return await bcrypt.hash(senha, saltRounds);
+  }
+  
   async findAll(page: number = 1, limit: number = 10): Promise<Cliente[]> {
     return this.clienteRepository.find({
       skip: (page - 1) * limit,
@@ -111,13 +121,4 @@ export class ClientesService {
     );
   }
 
-  private gerarLogin(nome: string): string {
-    const normalized = nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    return normalized.toLowerCase().replace(/\s+/g, '.');
-  }
-
-  private async criptografarSenha(senha: string): Promise<string> {
-    const saltRounds = 10;
-    return await bcrypt.hash(senha, saltRounds);
-  }
-}
+ 
