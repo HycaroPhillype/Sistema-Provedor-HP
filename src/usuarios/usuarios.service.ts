@@ -23,6 +23,12 @@ export class UsuarioService {
     return this.usuarioRepository.save(user);
   }
 
+  async searchId(id: number): Promise<Usuario | null> {
+    return this.usuarioRepository.findOne({
+      where: { id },
+    });
+  }
+
   async searchByEmail(email: string): Promise<Usuario> {
     const user = await this.usuarioRepository.findOne({
       where: { email },

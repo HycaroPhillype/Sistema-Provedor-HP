@@ -11,9 +11,8 @@ export interface JwtPayload {
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private usuarioService: UsuarioService) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const jwtExtractor: (req: Request) => string | null =
-      ExtractJwt.fromAuthHeaderAsBearerToken() as JwtFromRequestFunction<string>;
+    const jwtExtractor: JwtFromRequestFunction =
+      ExtractJwt.fromAuthHeaderAsBearerToken();
 
     super({
       jwtFromRequest: jwtExtractor,
