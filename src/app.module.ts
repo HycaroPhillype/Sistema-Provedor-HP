@@ -6,6 +6,8 @@ import { ClientesModule } from './clientes/clientes.module';
 import { PlanoModule } from './planos/planos-module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { AuthModule } from './auth/auth.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -25,5 +27,7 @@ import { AuthModule } from './auth/auth.module';
     UsuariosModule,
     AuthModule,
   ],
+  controllers: [AppController ],
+  providers: [AppService],
 })
 export class AppModule {}
