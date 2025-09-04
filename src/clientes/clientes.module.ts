@@ -6,16 +6,17 @@ import { Cliente } from './entities/cliente.entity';
 import { RadiusModule } from '../radius/radius-module';
 import { RadiusService } from '../radius/radius-service';
 import { HistoricoModule } from '../historico/historico-module';
+import { PlanoModule } from '../planos/planos-module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Cliente]),
     RadiusModule,
     HistoricoModule,
-],
-controllers: [ClientesController],
-providers: [ClientesService,RadiusService],
-exports: [ClientesService],
+    PlanoModule,
+  ],
+  controllers: [ClientesController],
+  providers: [ClientesService, RadiusService],
+  exports: [ClientesService],
 })
 export class ClientesModule {}
-

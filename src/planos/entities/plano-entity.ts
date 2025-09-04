@@ -21,6 +21,6 @@ export class Plano {
   @Column({ default: true })
   ativo: boolean;
 
-  @OneToMany(() => Cliente, (cliente) => cliente.plano)
+  @OneToMany(() => Cliente, (cliente) => cliente.planos)
   clientes: Cliente[];
 }
