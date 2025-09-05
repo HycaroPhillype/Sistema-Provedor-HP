@@ -7,14 +7,17 @@ import {
   Put,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ClientesService } from './clientes.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger'; // Documentação
 import { UpdateClienteDto } from './dto/update-cliente.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Clientes')
 @Controller('clientes')
+@UseGuards(JwtAuthGuard)
 export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}
 

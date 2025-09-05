@@ -7,11 +7,14 @@ import {
   Param,
   Delete,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { PlanosService } from './planos-service';
 import { Plano } from './entities/plano-entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('planos')
+@UseGuards(JwtAuthGuard)
 export class PlanosController {
   constructor(private readonly planosService: PlanosService) {}
 
