@@ -14,7 +14,7 @@ export class FinanceiroService {
     private clientesService: ClientesService,
   ) {}
 
-  async criarFatura(createFatiraDto: CreateFaturaDto): Promise<Fatura> {
+  async createFatura(createFatiraDto: CreateFaturaDto): Promise<Fatura> {
     const fatura = this.faturaRepository.create(createFatiraDto);
     return this.faturaRepository.save(fatura);
   }
@@ -75,7 +75,7 @@ export class FinanceiroService {
     });
   }
 
-  async searchDefaulters(): Promisse<any[]> {
+  async searchDefaulters(): Promise<any[]> {
     const query = `
       SELECT c.*
       FROM clientes c
@@ -86,9 +86,10 @@ export class FinanceiroService {
     return this.faturaRepository.query(query);
   }
 
-  // async generateFaturasMensais(): Promise<void> {
-  //   console.log('Gerando faturas mensais...');
-  // }
+  generateFaturasMensais(): void {
+    console.log('Gerando faturas mensais...');
+    return;
+  }
 
   async clienteTemFaturasAtrasadas(clienteId: number): Promise<boolean> {
     const cliente = await this.clientesService.findOne(clienteId);
