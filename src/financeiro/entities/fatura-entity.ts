@@ -30,7 +30,7 @@ export class Fatura {
   @Column({ type: 'date', nullable: true })
   observacao: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   dataCriacao: Date;
 
   @Column({ type: 'timestamp', nullable: true })

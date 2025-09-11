@@ -4,8 +4,10 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Plano } from '../../planos/entities/plano-entity';
+import { Fatura } from '../../financeiro/entities/fatura-entity';
 
 @Entity()
 export class Cliente {
@@ -65,4 +67,7 @@ export class Cliente {
 
   @Column({ name: 'plano_id' })
   planoId: number;
+
+  @OneToMany(() => Fatura, (fatura) => fatura.cliente)
+  faturas: Fatura[];
 }

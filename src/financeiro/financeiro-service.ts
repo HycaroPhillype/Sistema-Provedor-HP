@@ -2,9 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, LessThan, Repository } from 'typeorm';
 import { Fatura } from 'src/financeiro/entities/fatura-entity';
-import { ClientesService } from '../clientes/clientes.service';
 import { CreateFaturaDto } from './dto/create-fatura.dto';
 import { UpdateFaturaDto } from './dto/update-fatura.dto';
+import { ClientesService } from '../clientes/clientes.service';
 
 @Injectable()
 export class FinanceiroService {

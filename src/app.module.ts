@@ -10,6 +10,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Cliente } from './clientes/entities/cliente.entity';
 import { Plano } from './planos/entities/plano-entity';
+import { FinanceiroModule } from './financeiro/financeiro.module';
+import { Fatura } from './financeiro/entities/fatura-entity';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -21,13 +23,14 @@ import { Plano } from './planos/entities/plano-entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Cliente, Plano, __dirname + '/**/*.entity{.ts,.js}'],
+      entities: [Fatura, Cliente, Plano, __dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     ClientesModule,
     PlanoModule,
     UsuariosModule,
     AuthModule,
+    FinanceiroModule,
   ],
   controllers: [AppController],
   providers: [AppService],
