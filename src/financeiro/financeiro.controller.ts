@@ -10,6 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { FinanceiroService } from './financeiro-service';
+import { GeradorFaturasService } from './gerador-faturas.service';
 import { Fatura } from './entities/fatura-entity';
 import { CreateFaturaDto } from './dto/create-fatura.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -18,7 +19,10 @@ import { UpdateFaturaDto } from './dto/update-fatura.dto';
 @Controller('financeiro')
 @UseGuards(JwtAuthGuard)
 export class FinanceiroController {
-  constructor(private readonly financeiroService: FinanceiroService) {}
+  constructor(
+    private readonly financeiroService: FinanceiroService,
+    private readonly geradorFaturasService: GeradorFaturasService,
+  ) {}
 
   @Post('faturas')
   createFatura(@Body() createFaturaDto: CreateFaturaDto): Promise<Fatura> {
@@ -66,10 +70,8 @@ export class FinanceiroController {
     return await this.financeiroService.searchDefaulters();
   }
 
-  @Post('fatuas/gerar-mensal')
-  gerarFaturasMensais(): Promise<string> {
-    this.financeiroService.generateFaturasMensais();
-
-    return Promise.resolve('Faturas mensais geradas com sucesso.');
+  @Post('gerar-faturas')
+  async gerarFaturas(): Promise<string> {
+    return this.geradorFaturasService.executarGeracaoFatura();
   }
 }
