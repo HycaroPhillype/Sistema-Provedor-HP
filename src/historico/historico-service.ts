@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
-
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { HistoricoCliente } from './entities/historico-entity';
 @Injectable()
 export class HistoricoService {
   private registros: any[] = [];
