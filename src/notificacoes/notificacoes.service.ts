@@ -77,9 +77,9 @@ export class NotificacoesService {
       );
 
       await this.historicoService.registrar(
-        fatura.clienteId,
         'NOTIFICACAO_VENCIMENTO',
         mensagem,
+        fatura.clienteId,
       );
 
       return true;
@@ -95,6 +95,7 @@ export class NotificacoesService {
       const hoje = new Date();
 
       const faturasVencidas = await this.faturaRepository.find({
+        
         where: {
           dataVencimento: LessThanOrEqual(hoje),
           paga: false,
@@ -102,7 +103,9 @@ export class NotificacoesService {
         relations: ['cliente'],
       });
 
-      this.logger.log(`Encontradas ${faturasVencidas.length} faturas vencidas.`);
+      this.logger.log(
+        `Encontradas ${faturasVencidas.length} faturas vencidas.`,
+      );
 
       let notificacoesEnviadas = 0;
       for (const fatura of faturasVencidas) {
@@ -122,52 +125,7 @@ export class NotificacoesService {
         `Notificações de faturas vencidas enviadas com sucesso: ${notificacoesEnviadas} notificações enviadas.`,
       );
     } catch (error) {
-      this.logger.error(
-        `Erro ao verificar faturas vencidas: ${error.message}`,
-      );
-
-    }
-  }
-
-    async enviarNotificacaoAtraso(fatura: Fatura): Promise<boolean> {
-      try {
-        const hoje = new Date();
-        const diasAtraso = Math.floor(
-          (hoje.getTime() - fatura.dataVencimento.getTime()) /
-            (1000 * 60 * 60 * 24),
-        );
-
-        const mensagem = `Aviso: Sua fatura de R$${fatura.valor} está vencida há ${diasAtraso} dias. Por favor, regularize seu pagamento o mais rápido possível para evitar cobranças adicionais.`;
-
-        this.logger.log(
-          `Enviando notificação de fatura vencida para o cliente ${fatura.cliente.nome} (${fatura.cliente.email}): ${mensagem}`,
-        );
-
-        await this.historicoService.registrar(
-          fatura.clienteId,
-          `NOTIFICACAO_FATURA_VENCIDA`,
-          mensagem,
-        );
-
-        return true;
-      } catch (error) {
-        this.logger.error(`Erro ao enviar notificação: ${error.message}`);
-        return false;
-      }
-    }
-
-    async executarVerificacoesManuais(): Promise<string> {
-      this.logger.log('Executando verificações manuais de faturas...');
-      try {
-      await this.verificarFaturasProximasVencimento();
-      await this.verificarFaturasVencidas();
-      return 'Verificações manuais concluídas.';
-    } catch (error) {
-      this.logger.error(
-        `Erro ao executar verificações manuais: ${error.message}`,
-      throw new Error(`Falha ao verificar notificações: ${error.message}`
-      );
-      
+      this.logger.error(`Erro ao verificar faturas vencidas: ${error.message}`);
     }
   }
 }
