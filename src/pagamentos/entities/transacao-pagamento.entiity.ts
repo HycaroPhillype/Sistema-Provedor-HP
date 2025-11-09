@@ -39,7 +39,7 @@ export class TransacaoPagamento {
   @Column({ type: 'text' })
   urlPagamento: string;
 
-  @Column({ type: 'json', nullable: true})
+  @Column({ type: 'json', nullable: true })
   dadosPagamento: any;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
