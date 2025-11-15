@@ -16,6 +16,7 @@ import { HistoricoModule } from './historico/historico-module';
 import { Fatura } from './financeiro/entities/fatura-entity';
 import { NotificacoesModule } from './notificacoes/notificacoes.module';
 import { PagamentosModule } from './pagamentos/pagamentos.mudule';
+import { BloqueioModule } from './bloqueio/bloqueio-module';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -41,6 +42,8 @@ import { PagamentosModule } from './pagamentos/pagamentos.mudule';
     HistoricoModule,
     NotificacoesModule,
     PagamentosModule,
+    BloqueioModule,
+    RadiusModule
   ],
   controllers: [AppController],
   providers: [AppService],
