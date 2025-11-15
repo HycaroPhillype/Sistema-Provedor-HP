@@ -10,7 +10,7 @@ export class RadiusService {
   constructor() {
     this.client = new RadiusClient({
       host: process.env.RADIUS_SERVER || '192.168.1.1',
-      retries: 3, 
+      retries: 3,
       timeout: 5000,
     });
 
@@ -101,7 +101,7 @@ export class RadiusService {
         error: error.message,
         stack: error.stack,
       });
-      
+
       return false;
     }
   }

@@ -3,6 +3,7 @@ import { FinanceiroService } from '../financeiro/financeiro-service';
 import { ClientesService } from '../clientes/clientes.service';
 import { RadiusService } from '../radius/radius-service';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { HistoricoService } from '../historico/historico-service';
 
 @Injectable()
 export class BloqueioService {
@@ -10,6 +11,7 @@ export class BloqueioService {
     private financeiroService: FinanceiroService,
     private clientesService: ClientesService,
     private radiusService: RadiusService,
+    private historicoService: HistoricoService,
   ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_11PM)

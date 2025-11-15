@@ -11,13 +11,17 @@ import { AppService } from './app.service';
 import { Cliente } from './clientes/entities/cliente.entity';
 import { Plano } from './planos/entities/plano-entity';
 import { FinanceiroModule } from './financeiro/financeiro.module';
+import { RadiusModule } from './radius/radius-module';
+import { HistoricoModule } from './historico/historico-module';
 import { Fatura } from './financeiro/entities/fatura-entity';
 import { NotificacoesModule } from './notificacoes/notificacoes.module';
 import { PagamentosModule } from './pagamentos/pagamentos.mudule';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -26,13 +30,15 @@ import { PagamentosModule } from './pagamentos/pagamentos.mudule';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [Fatura, Cliente, Plano, __dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: process.env.NODE_ENV !== 'production',
     }),
     ClientesModule,
     PlanoModule,
     UsuariosModule,
     AuthModule,
     FinanceiroModule,
+    RadiusModule,
+    HistoricoModule,
     NotificacoesModule,
     PagamentosModule,
   ],
