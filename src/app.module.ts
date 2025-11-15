@@ -12,6 +12,8 @@ import { Cliente } from './clientes/entities/cliente.entity';
 import { Plano } from './planos/entities/plano-entity';
 import { FinanceiroModule } from './financeiro/financeiro.module';
 import { Fatura } from './financeiro/entities/fatura-entity';
+import { NotificacoesModule } from './notificacoes/notificacoes.module';
+import { PagamentosModule } from './pagamentos/pagamentos.mudule';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -31,6 +33,8 @@ import { Fatura } from './financeiro/entities/fatura-entity';
     UsuariosModule,
     AuthModule,
     FinanceiroModule,
+    NotificacoesModule,
+    PagamentosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
