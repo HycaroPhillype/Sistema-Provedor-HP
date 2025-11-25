@@ -1,12 +1,12 @@
 import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
-import { RelatirosService } from './relatorios.service';
+import { RelatoriosService } from './relatorios.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { FiltroRelatoriosDto } from './dto/filtro-relatorios.dto';
 
 @Controller('relatorios')
 @UseGuards(JwtAuthGuard)
 export class RelatoriosController {
-  constructor(private readonly relatoriosService: RelatirosService) {}
+  constructor(private readonly relatoriosService: RelatoriosService) {}
 
   @Post()
   async gerarRelatorio(@Body() filtroRelatorioDto: FiltroRelatoriosDto) {

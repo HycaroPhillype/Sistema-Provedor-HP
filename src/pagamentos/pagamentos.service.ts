@@ -3,18 +3,18 @@ import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import mercadopago from 'mercadopago';
-import { TransacaoPagamento } from './entities/transacao-pagamento.entity';
-import { Fatura } from '../financeiro/entities/fatura.entity';
+import { TransacaoPagamento } from './entities/transacao-pagamento.entiity';
+import { Fatura } from '../financeiro/entities/fatura-entity';
 import { Cliente } from '../clientes/entities/cliente.entity';
 import { CriarPagamentoDto } from './dto/criar-pagamento.dto';
 import { WebhookPagamentoDto } from './dto/webhook-pagamento.dto';
-import { HistoricoService } from '../historico/historico.service';
+import { HistoricoService } from '../historico/historico-service';
 import { title } from 'process';
 import { url } from 'inspector';
 
 @Injectable()
 export class PagamentosService {
-    private reandonly logger = new Logger(PagamentosService.name);
+    private readonly logger = new Logger(PagamentosService.name);
 
     constructor(
         private configService: ConfigService,
@@ -127,7 +127,7 @@ export class PagamentosService {
                 const transacao = await this.transacaoRepository.findOne({
                     where: {
                         transacaoId: paymentData.external_reference
-                    }
+                    },
                     relations: ['fatura', 'cliente'],
                 });
 

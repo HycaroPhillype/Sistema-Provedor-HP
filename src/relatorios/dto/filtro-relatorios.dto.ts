@@ -1,4 +1,4 @@
-import { IsOptional, IsDateString, IsEnum, IsNumber } from 'class-validator';
+import { IsOptional, IsDateString, IsEnum, IsNumber, IsString } from 'class-validator';
 
 export enum TipoRelatorio {
   RESUMO_MENSAL = 'resumo_mensal',
@@ -27,4 +27,8 @@ export class FiltroRelatoriosDto {
   @IsOptional()
   @IsNumber()
   planoId?: number;
+
+  @IsOptional()
+  @IsString()
+  tipo?: string;
 }

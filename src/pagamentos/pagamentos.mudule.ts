@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PagamentosService } from './pagamentos.service';
 import { PagamentosController } from './pagamentos.controller';
-import { TransacaoPagamento } from './entities/transacao-pagamento.entity';
-import { Fatura } from '../financeiro/entities/fatura.entity';
+import { TransacaoPagamento } from './entities/transacao-pagamento.entiity';
+import { Fatura } from '../financeiro/entities/fatura-entity';
 import { Cliente } from '../clientes/entities/cliente.entity';
-import { HistoricoModule } from '../historico/historico.module';
+import { HistoricoModule } from '../historico/historico-module';
 
 @Module({
   imports: [

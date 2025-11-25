@@ -1,44 +1,19 @@
-// src/app.module.ts
+
 import { Module } from '@nestjs/common';
-import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { AppController } from '../app.controller';
-import { AppService } from '../app.service';
-import { ClientesModule } from '../clientes/clientes.module';
-import { PlanosModule } from '../planos/planos-module';
-import { AuthModule } from '../auth/auth.module';
-import { UsuariosModule } from '../usuarios/usuarios.module';
-import { FinanceiroModule } from '../financeiro/financeiro.module';
-import { HistoricoModule } from '../historico/historico-module';
-import { NotificacoesModule } from '../notificacoes/notificacoes.module';
-import { PagamentosModule } from '../pagamentos/pagamentos.mudule';
-import { BloqueioModule } from '../bloqueio/bloqueio-module';
-import { RadiusModule } from '../radius/radius-module';
-import { RelatoriosModule } from '../relatorios/relatorios.module';
+import { RelatoriosService } from './relatorios.service';
+import { RelatoriosController } from './relatorios.controller';
+import { Fatura } from '../financeiro/entities/fatura-entity';
+import { Cliente } from '../clientes/entities/cliente.entity';
+import { Plano } from '../planos/entities/plano-entity';
+import { TransacaoPagamento } from '../pagamentos/entities/transacao-pagamento.entiity';
+
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    ScheduleModule.forRoot(),
-    TypeOrmModule.forRoot({
-    }),
-    ClientesModule,
-    PlanosModule,
-    AuthModule,
-    UsuariosModule,
-    FinanceiroModule,
-    HistoricoModule,
-    NotificacoesModule,
-    PagamentosModule,
-    BloqueioModule,
-    RadiusModule,
-    RelatoriosModule, 
+    TypeOrmModule.forFeature([Fatura, Cliente, Plano, TransacaoPagamento]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [RelatoriosController],
+  providers: [RelatoriosService],
+  exports: [RelatoriosService],
 })
-export class AppModule {}
-
-export { RelatoriosModule };
+export class RelatoriosModule {}

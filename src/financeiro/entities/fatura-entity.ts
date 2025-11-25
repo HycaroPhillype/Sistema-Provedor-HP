@@ -35,4 +35,5 @@ export class Fatura {
 
   @Column({ type: 'timestamp', nullable: true })
   dataPagamento: Date;
+
 }

@@ -3,7 +3,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ClientesModule } from './clientes/clientes.module';
-import { PlanoModule } from './planos/planos-module';
+import { PlanosModule } from './planos/planos-module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
@@ -17,6 +17,7 @@ import { Fatura } from './financeiro/entities/fatura-entity';
 import { NotificacoesModule } from './notificacoes/notificacoes.module';
 import { PagamentosModule } from './pagamentos/pagamentos.mudule';
 import { BloqueioModule } from './bloqueio/bloqueio-module';
+import { RelatoriosModule } from './relatorios/relatorios.module';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -34,7 +35,7 @@ import { BloqueioModule } from './bloqueio/bloqueio-module';
       synchronize: process.env.NODE_ENV !== 'production',
     }),
     ClientesModule,
-    PlanoModule,
+    PlanosModule,
     UsuariosModule,
     AuthModule,
     FinanceiroModule,
@@ -43,7 +44,8 @@ import { BloqueioModule } from './bloqueio/bloqueio-module';
     NotificacoesModule,
     PagamentosModule,
     BloqueioModule,
-    RadiusModule
+    RadiusModule,
+    RelatoriosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
