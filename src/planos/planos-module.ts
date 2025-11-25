@@ -10,4 +10,4 @@ import { Plano } from './entities/plano-entity';
   providers: [PlanosService],
   exports: [PlanosService],
 })
-export class PlanoModule {}
+export class PlanosModule {}

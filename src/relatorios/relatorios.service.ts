@@ -271,7 +271,7 @@ export class RelatoriosService {
             dataFim = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
         }
 
-        dataInicio.setHorse(0,0,0,0);
+        dataInicio.setHours(0,0,0,0);
         dataFim.setHours(23,59,59,999);
 
         return { dataInicio, dataFim };
@@ -283,14 +283,9 @@ export class RelatoriosService {
         const fim = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
 
         const recetaMes = await this.faturaRepository
-        .createQueryBuilder('fatura')
-        .select('SUM(fatura.valor)', 'total')
-        .where('fatura.paga = :paga', { paga: true})
-        .andWhere('fatura.dataPagamento BETWEEN :inicio AND :fim', {
-            inicio: inicioMes,
-            fim: fim,
-        })
-        .getRawOne();
+        
+            
+            .getRawOne();
 
         const clientesAtivos = await this.clienteRepository.count({
             where: { ativo: true},
@@ -310,13 +305,15 @@ export class RelatoriosService {
         .getRawOne();
 
         return {
-            receitaMes: parseFloat(receitaMes.total) || 0,
+            receitaMes: parseFloat(receitaMes.total) ?? 0,
             clientesAtivos,
             faturasPendentes,
-            proximosVencimentos: parseFloat(proximoVencimento.total) || 0,
+            proximosVencimentos: parseFloat(proximoVencimento?.total) || 0,
             atualizadoEm: new Date(),
         };
     }
+        
+    
            
 }
 
