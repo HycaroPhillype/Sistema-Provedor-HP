@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Headers, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Headers,
+  UseGuards,
+  Get,
+  Param,
+} from '@nestjs/common';
 import { PagamentosService } from './pagamentos.service';
 import { WebhookPagamentoDto } from './dto/webhook-pagamento.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -19,7 +27,7 @@ export class PagamentosController {
   @Get('status/:transacaoId')
   @UseGuards(JwtAuthGuard)
   async verificarStatus(@Param('transacaoId') transacaoId: string) {
-    return this.pagementosService.verificarStatus(transacaoId);
+    return this.pagamentosService.verificarStatus(transacaoId);
   }
 
   @Get('cliente/:clienteId')

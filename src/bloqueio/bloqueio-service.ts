@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { FinanceiroService } from '../financeiro/financeiro-service';
 import { ClientesService } from '../clientes/clientes.service';
 import { RadiusService } from '../radius/radius-service';
@@ -7,6 +7,7 @@ import { HistoricoService } from '../historico/historico-service';
 
 @Injectable()
 export class BloqueioService {
+  private readonly logger = new Logger(BloqueioService.name);
   constructor(
     private financeiroService: FinanceiroService,
     private clientesService: ClientesService,

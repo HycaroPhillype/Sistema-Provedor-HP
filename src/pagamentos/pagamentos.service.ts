@@ -11,7 +11,6 @@ import { Cliente } from '../clientes/entities/cliente.entity';
 import { CriarPagamentoDto } from './dto/criar-pagamento.dto';
 import { WebhookPagamentoDto } from './dto/webhook-pagamento.dto';
 import { HistoricoService } from '../historico/historico-service';
-
 @Injectable()
 export class PagamentosService {
   private readonly logger = new Logger(PagamentosService.name);
@@ -26,6 +25,7 @@ export class PagamentosService {
     @InjectRepository(Cliente)
     private clientesRepository: Repository<Cliente>,
     private historicoService: HistoricoService,
+    
   ) {
     this.mpClient = new MercadoPagoConfig({
       accessToken: this.configService.get<string>('MERCADO_PAGO_ACCESS_TOKEN')!,
@@ -146,4 +146,20 @@ export class PagamentosService {
       dataPagamento: transacao.dataPagamento,
     };
   }
+
+ async listarTransacoes(clienteId: number): Promise<any[]> {
+  try {
+    const transacoes = await this.transacaoRepository.find({
+      where: { clienteId },
+      relations: ['fatura', 'cliente'],
+      order: { dataCriacao: 'DESC' },
+    });
+
+    return transacoes;
+  } catch (err) {
+    this.logger.error('Erro ao listar transações', err);
+    throw new Error('Não foi possível listar as transações.');
+  }
+}
+
 }
